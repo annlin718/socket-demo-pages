@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <meta charset="utf-8" />
+  <title>主螢幕</title>
+
+  <h1>全場能量</h1>
+  <p id="total" style="font-size: 80px">0</p>
+  <p id="status">連線中…</p>
+
+  <script src="https://socket-demo-server.onrender.com/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io("https://socket-demo-server.onrender.com");
+
+    socket.on("state", ({ started, total }) => {
+      document.querySelector("#total").textContent = total;
+      document.querySelector("#status").textContent = started ? "活動進行中" : "等待開始";
+    });
+  </script>
+</html>

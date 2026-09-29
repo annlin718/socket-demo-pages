@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <meta charset="utf-8" />
+  <title>手機集氣</title>
+
+  <h1>手機集氣</h1>
+  <p id="status">連線中…</p>
+  <button id="energy" disabled>點我集氣 ✨</button>
+
+  <script src="https://socket-demo-server.onrender.com/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io("https://socket-demo-server.onrender.com");
+    const button = document.querySelector("#energy");
+
+    button.onclick = () => socket.emit("addEnergy");
+
+    socket.on("state", ({ started }) => {
+      button.disabled = !started;
+      document.querySelector("#status").textContent = started ? "活動開始，按下按鈕集氣！" : "等待控制台開始";
+    });
+  </script>
+</html>

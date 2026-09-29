@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <meta charset="utf-8" />
+  <title>控制台</title>
+
+  <h1>控制台</h1>
+  <button id="start">開始活動</button>
+  <button id="reset">重設</button>
+  <p id="status"></p>
+
+  <script src="https://socket-demo-server.onrender.com/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io("https://socket-demo-server.onrender.com");
+
+    document.querySelector("#start").onclick = () => socket.emit("start");
+    document.querySelector("#reset").onclick = () => socket.emit("reset");
+
+    socket.on("state", ({ started, total }) => {
+      document.querySelector("#status").textContent = `狀態：${started ? "進行中" : "等待開始"}，總能量：${total}`;
+    });
+  </script>
+</html>
